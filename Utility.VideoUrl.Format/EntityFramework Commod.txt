@@ -1,0 +1,2 @@
+# Point center - Server
+dotnet ef DBContext scaffold "Server=35.229.233.232;Database=PointCenter;User Id=rdteam;Password=AA98765ss;;TrustServerCertificate=true;Encrypt=true" Microsoft.EntityFrameworkCore.SqlServer -c ServerContext --context-dir Context -o Domain\Server -t Server --no-onconfiguring -f
