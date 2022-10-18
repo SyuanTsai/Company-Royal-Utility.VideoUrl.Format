@@ -8,7 +8,8 @@ using Microsoft.Extensions.Caching.Memory;
 using VideoUrlFormat.Context;
 using VideoUrlFormat.Domain.Server;
 
-#if NET5_0
+#if NETCOREAPP3_1
+#elif NET5_0 
 #elif NET6_0
 using VideoUrlFormat.Abstract.Clubs;
 using VideoUrlFormat.Enums;
@@ -49,7 +50,6 @@ public class ClubFactory
         //  沒環境參數 - 依照舊版執行
         if (string.IsNullOrEmpty(sDate))
         {
-            Console.WriteLine("CommonClub Filter1");
             //  目前僅有Xg館有特殊規格
             //  完美目前是依照舊規格
             return club switch
@@ -65,7 +65,6 @@ public class ClubFactory
         var date = DateTime.ParseExact(sDate, "yyyyMMdd", CultureInfo.InvariantCulture);
         if (DateTime.Now.Date >= date)
         {
-            Console.WriteLine("CommonClub Filter2");
             return club switch
                    {
                        ClubEnum.XG => typeof(XgClubFilter)
@@ -73,7 +72,6 @@ public class ClubFactory
                    };
         }
 
-        Console.WriteLine("CommonClub Filter3");
         //  目前僅有Xg館有特殊規格
         //  完美目前是依照舊規格
         return club switch

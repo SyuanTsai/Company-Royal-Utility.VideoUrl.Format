@@ -2,7 +2,8 @@ using System;
 using System.Threading.Tasks;
 using VideoUrlFormat.Domain.Server;
 
-#if NET5_0
+#if NETCOREAPP3_1
+#elif NET5_0 
 #elif NET6_0
 using VideoUrlFormat.Model;
 namespace VideoUrlFormat.Abstract.GameClubVideo;
@@ -30,8 +31,6 @@ public class GcRgRacingVideo : BaseVideo
         return result;
     }
 
-
-
     /// <summary>
     ///     產生客製化的視訊網址
     /// </summary>
@@ -49,7 +48,8 @@ public class GcRgRacingVideo : BaseVideo
         
         if (time is null)
         {
-            throw new ArgumentNullException (nameof(time),"日期時間錯誤，請確認是否有資料輸入。");
+            Console.WriteLine("視訊套件：時間為空值。");
+            return string.Empty;
         }
 
         if (string.IsNullOrWhiteSpace(urlData))

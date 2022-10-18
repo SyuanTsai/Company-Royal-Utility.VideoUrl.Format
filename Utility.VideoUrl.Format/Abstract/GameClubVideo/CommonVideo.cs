@@ -1,8 +1,12 @@
 using System;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using VideoUrlFormat.Domain.Server;
 
-#if NET5_0
+#if NETCOREAPP3_1
+#elif NET5_0
 #elif NET6_0
 using VideoUrlFormat.Model;
 namespace VideoUrlFormat.Abstract.GameClubVideo;
@@ -23,9 +27,9 @@ public class CommonVideo : BaseVideo
     {
         var result = new Video()
         {
-            VideoOne   = CustomVideoUrl(info.NoRun, info.NoActive, server.HistoryVideoUrl1, info.Time)
-          , VideoTwo   = CustomVideoUrl(info.NoRun, info.NoActive, server.HistoryVideoUrl2, info.Time)
-          , VideoThree = CustomVideoUrl(info.NoRun, info.NoActive, server.HistoryVideoUrl3, info.Time),
+            VideoOne   = CustomVideoUrl(info.NoRun, info.NoActive, server.HistoryVideoUrl1)
+          , VideoTwo   = CustomVideoUrl(info.NoRun, info.NoActive, server.HistoryVideoUrl2)
+          , VideoThree = CustomVideoUrl(info.NoRun, info.NoActive, server.HistoryVideoUrl3),
         };
 
         return result;
@@ -34,32 +38,28 @@ public class CommonVideo : BaseVideo
     /// <summary>
     ///     產生客製化的視訊網址
     /// </summary>
-    /// <param name="noRun"></param>
-    /// <param name="noActive"></param>
+    /// <param name="noRun">
+    ///     輪號-應該為中文日期 yymmdd0001
+    /// </param>
+    /// <param name="noActive">
+    ///     局號-應該為4位數中文
+    /// </param>
     /// <param name="urlData"></param>
-    /// <param name="time"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    private static string CustomVideoUrl(string    noRun
-                                       , string    noActive
-                                       , string?   urlData
-                                       , DateTime? time)
+    private string CustomVideoUrl(string  noRun
+                                       , string  noActive
+                                       , string? urlData)
     {
-        
-        if (time is null)
-        {
-            throw new ArgumentNullException (nameof(time),"日期時間錯誤，請確認是否有資料輸入。");
-        }
 
-        if (string.IsNullOrWhiteSpace(urlData))
+        if (!Validation(noRun, noActive, urlData))
         {
             return string.Empty;
         }
+        var date = noRun.Substring(2,4);
 
-        var date = time.Value.ToString("MMdd");
-
-        //  取得URL+輪號/日期+局號後三碼
+        //  20221018與雷哥確認，IT切檔時間依據「輪號」的日期。
+        //  故如果發生該輪局玩到1點，視訊應該也是根據輪號的日期儲存。        
         return $"{urlData}{date}/{noRun}{noActive}.mp4";
-
     }
 }

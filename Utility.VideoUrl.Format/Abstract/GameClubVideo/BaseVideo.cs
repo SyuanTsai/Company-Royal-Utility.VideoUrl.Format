@@ -2,7 +2,8 @@ using System.Threading.Tasks;
 using VideoUrlFormat.Domain.Server;
 
 
-#if NET5_0
+#if NETCOREAPP3_1
+#elif NET5_0
 #elif NET6_0
 using VideoUrlFormat.Interface;
 using VideoUrlFormat.Model;
@@ -14,9 +15,8 @@ public abstract class BaseVideo : IGenerateVideo
 {
     protected BaseVideo()
     {
-        
     }
-    
+
     /// <summary>
     ///     產生單一輪局的視訊網址
     /// </summary>
@@ -34,6 +34,37 @@ public abstract class BaseVideo : IGenerateVideo
         };
 
         return result;
+    }
+
+    /// <summary>
+    ///     資料驗證
+    /// </summary>
+    /// <param name="noRun">
+    ///     輪號-應該為中文日期 yymmdd0001
+    /// </param>
+    /// <param name="noActive">
+    ///     局號-應該為4位數中文
+    /// </param>
+    /// <param name="urlData"></param>
+    /// <returns></returns>
+    public virtual bool Validation(string noRun, string noActive, string urlData)
+    {
+        if (string.IsNullOrWhiteSpace(urlData))
+        {
+            return false;
+        }
+
+        if (noRun.Length < 6)
+        {
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(noActive))
+        {
+            return false;
+        }
+
+        return true;
     }
 
 

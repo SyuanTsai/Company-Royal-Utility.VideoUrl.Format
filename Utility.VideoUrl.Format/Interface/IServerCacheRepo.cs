@@ -2,7 +2,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoUrlFormat.Domain.Server;
 
-#if NET5_0
+#if NETCOREAPP3_1
+#elif NET5_0 
 #elif NET6_0
 using VideoUrlFormat.Enums;
 namespace VideoUrlFormat.Interface;
