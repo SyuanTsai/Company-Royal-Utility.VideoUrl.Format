@@ -27,9 +27,6 @@ namespace VideoUrlFormat.Context
 
                 entity.HasComment("伺服器(機台)");
 
-                entity.HasIndex(e => e.ServerNo, "UQ__Server__C56B1354F0221199")
-                    .IsUnique();
-
                 entity.Property(e => e.Id)
                     .HasMaxLength(20)
                     .IsUnicode(false)

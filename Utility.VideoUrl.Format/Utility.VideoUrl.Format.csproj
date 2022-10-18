@@ -7,9 +7,14 @@
         <Title>GameVideoFormat</Title>
         <Authors>SyuanTsai</Authors>
         <Description>視訊格式套件 
-目前套件專案建置於 - http://gitlab.royal-test.com/rcg-platform/LobbyEntranceApi.git
+套件專案建置於 - https://gitlab.royal-test.com/rcg-platform/library/Utility.VideoUrl.Format
+
+V6.0.6
+- 修正3.1被強制升級5.0的問題
+
 v6.0.5
 - 新增支援3.1
+
 v6.0.4
 - 增加版更說明
 
@@ -23,22 +28,8 @@ v6.0.1
 - 統一遊戲視訊格式輸出(僅支援Net Core6.0)</Description>
         <PackageProjectUrl>https://gitlab.royal-test.com/rcg-platform/LobbyEntranceApi</PackageProjectUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>6.0.5</PackageVersion>
-        <PackageReleaseNotes>視訊格式套件 
-目前套件專案建置於 - http://gitlab.royal-test.com/rcg-platform/LobbyEntranceApi.git
-v6.0.5
-- 新增支援3.1
-v6.0.4
-- 增加版更說明
-
-v6.0.3
-- 增加讀取環境參數[VideoSwitchData] - yyyyMMdd，做視訊格式切換
-
-v6.0.2
-- 調整結構向下支援 Net Core5.0
-
-v6.0.1
-- 統一遊戲視訊格式輸出(僅支援Net Core6.0)</PackageReleaseNotes>
+        <PackageVersion>6.0.6</PackageVersion>
+        <PackageReleaseNotes></PackageReleaseNotes>
         <TargetFrameworks>net5.0;net6.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
 
@@ -77,13 +68,13 @@ v6.0.1
     </PropertyGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
         <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.27">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.27" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.27" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.27" />
     </ItemGroup>
 
     <ItemGroup>
