@@ -358,3 +358,4 @@ LobbyAPI/Web.UAT.config
 LobbyAPI/Web.config~develop
 LobbyAPI/Web.config
 LobbyAPIService/App.config
+*.bak

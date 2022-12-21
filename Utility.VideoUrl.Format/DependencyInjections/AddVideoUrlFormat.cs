@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using VideoUrlFormat.Context;
 
 #if NETCOREAPP3_1
-#elif NET5_0 
+#elif NET5_0
 #elif NET6_0
 using VideoUrlFormat.Abstract.Clubs;
 using VideoUrlFormat.Abstract.GameClubVideo;
@@ -23,25 +23,36 @@ namespace VideoUrlFormat.DependencyInjections;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddVideoUrlFormat(this IServiceCollection services
-                                                     , IConfiguration          config)
+                                                     , IConfiguration          config
+                                                     , string?                 dbConnection = null
+                                                     , string?                 ksApiUrl     = null)
     {
         Console.WriteLine("套建載入");
+
         if (services == null)
         {
             throw new ArgumentNullException(nameof(services));
         }
-
+        
+        
         var setting = config.GetSection("VideoSetting")
                             .Get<VideoSetting>();
 
+        if (string.IsNullOrWhiteSpace(dbConnection))
+        {
+            dbConnection = setting.ServerConnection;
+        }
+
         //  註冊ServerContext
         services.AddDbContext<ServerContext>
-            (options => { options.UseSqlServer(setting.ServerConnection, ContextSetting()); });
+            (options => { options.UseSqlServer(dbConnection, ContextSetting()); });
 
+        var ks = string.IsNullOrWhiteSpace(ksApiUrl) ? setting.KsApi : new Uri(ksApiUrl);
+        
         services.AddScoped<IApiManageRepo>
         (
             provider =>
-                new ApiManageRepo(provider.GetService<IHttpClientFactory>()!, setting.KsApi)
+                new ApiManageRepo(provider.GetService<IHttpClientFactory>()!, ks)
         );
 
         //  遊戲客製視訊
@@ -50,7 +61,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IGenerateVideo, GcRgRacingVideo>(); //  GC賽車
         services.AddScoped<IGenerateVideo, XgCommonVideo>();   //  Xg全部
         services.AddScoped<IGenerateVideo, WmCommonVideo>();   //  Wm全部
-        
+
         //  視訊工廠 - 
         services.AddScoped<OldCommonVideoFactory>(); //  標準格式(舊版)
         services.AddScoped<CommonVideoFactory>();    //  標準格式

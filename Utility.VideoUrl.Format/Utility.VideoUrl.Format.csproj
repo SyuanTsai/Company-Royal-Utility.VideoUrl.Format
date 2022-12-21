@@ -8,6 +8,8 @@
         <Authors>SyuanTsai</Authors>
         <Description>視訊格式套件 
 套件專案建置於 - https://gitlab.royal-test.com/rcg-platform/library/Utility.VideoUrl.Format
+V6.0.7
+- 修正Lobby不明原因取得舊版設定問題
 
 V6.0.6
 - 修正3.1被強制升級5.0的問題
@@ -28,7 +30,7 @@ v6.0.1
 - 統一遊戲視訊格式輸出(僅支援Net Core6.0)</Description>
         <PackageProjectUrl>https://gitlab.royal-test.com/rcg-platform/LobbyEntranceApi</PackageProjectUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>6.0.6</PackageVersion>
+        <PackageVersion>6.0.7</PackageVersion>
         <PackageReleaseNotes></PackageReleaseNotes>
         <TargetFrameworks>net5.0;net6.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
